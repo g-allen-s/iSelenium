@@ -22,8 +22,8 @@ public abstract class WebUIBase {
     protected String curBrowser = "firefox"; //默认浏览器是firefox
     protected WebDriver driver;
     protected WebDriver.Navigation navigation;
-    protected String firefoxPath = "";
-    protected String chromePath = "";
+    protected String firefoxDriver = "";
+    protected String chromeDriver = "";
 
     protected int waitTime = 15;
 
@@ -35,10 +35,10 @@ public abstract class WebUIBase {
 
         //获取浏览器driver路径
         logger.info("Load webdriver path");
-        firefoxPath = prop.getProperty("FIREFOX_PATH");
-        chromePath = prop.getProperty("CHROME_PATH");
-        logger.info("firefoxPath = " + firefoxPath);
-        logger.info("chromePath = " + chromePath);
+        firefoxDriver = prop.getProperty("FIREFOX_DRIVER");
+        chromeDriver = prop.getProperty("CHROME_DRIVER");
+        logger.info("firefoxDriver = " + firefoxDriver);
+        logger.info("chromePath = " + chromeDriver);
 
         //设定当前运行的浏览器
         //需要在环境变量"currentBrowser"中配置当前运行什么浏览器, 可选值"firefox","chrome"
@@ -47,20 +47,18 @@ public abstract class WebUIBase {
 
         //构造webdriver
         if (curBrowser.equalsIgnoreCase("firefox")) {
-            System.setProperty("webdriver.firefox.bin", firefoxPath);
-            System.setProperty("javax.xml.parsers.DocumentBuilderFactory", "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
+            System.setProperty("webdriver.gecko.driver", firefoxDriver);
             driver = new FirefoxDriver();
         } else if (curBrowser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", chromePath);
+            System.setProperty("webdriver.chrome.driver", chromeDriver);
             driver = new ChromeDriver();
         } else if (curBrowser.equalsIgnoreCase("nogui")) {
-            System.setProperty("webdriver.chrome.driver", chromePath);
+            System.setProperty("webdriver.chrome.driver", chromeDriver);
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
             driver = new ChromeDriver(chromeOptions);
         } else {
-            System.setProperty("webdriver.firefox.bin", firefoxPath);
-            System.setProperty("javax.xml.parsers.DocumentBuilderFactory", "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl");
+            System.setProperty("webdriver.gecko.driver", firefoxDriver);
             driver = new FirefoxDriver();
         }
 
@@ -68,7 +66,7 @@ public abstract class WebUIBase {
         timeout.setScriptTimeout(waitTime, java.util.concurrent.TimeUnit.SECONDS);
         timeout.pageLoadTimeout(waitTime, java.util.concurrent.TimeUnit.SECONDS);
         timeout.implicitlyWait(waitTime, java.util.concurrent.TimeUnit.SECONDS);
-
+        driver.manage().window().maximize();
         navigation = driver.navigate();
     }
 
@@ -80,20 +78,20 @@ public abstract class WebUIBase {
             return;
         }
 
-        driver.quit();
+//        driver.quit();
     }
 
     //加载配置文件
     private Properties loadFromEnvProperties(String propFileName) {
         Properties prop = null;
 
-        String path = System.getProperty("user.home");
+        String path = System.getProperty("user.dir");
 
         //读入envProperties属性文件
         try {
             prop = new Properties();
             InputStream in = new BufferedInputStream(
-                    new FileInputStream(path + File.separator + propFileName));
+                    new FileInputStream(path + "\\src\\test\\resources\\" + propFileName));
             prop.load(in);
             in.close();
         } catch (IOException ioex) {
