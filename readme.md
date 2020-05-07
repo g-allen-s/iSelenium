@@ -1,8 +1,8 @@
-**Selenium自动化测试项目**
+﻿**Selenium自动化测试项目**
 
-1. 代码：java
-2. 项目框架： maven
-3. 自动化驱动框架：junit
+1. 代码：Java
+2. 项目框架： Maven
+3. 自动化驱动框架：Junit
 4. 自动化测试驱动框架 Selenium（WebDriver）
 5. 支持浏览器类型：chrome, firefox, headless (no-gui)
 6. 配置文件：src/resources/iselenium.properties ， 需要放置到到系统的 ${user.home} 下
