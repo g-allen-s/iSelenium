@@ -17,7 +17,9 @@ public class TestBaiDu extends WebUIBase {
     @Test
     public void cmdcGo() throws Exception{
         logger.info("Go to cmdc and fuck it up.");
-        goCmdc("ST200430027550", 0);
+        setParamter("cmdcCode");
+        System.out.println("cmdcCode::" + paramters.get("cmdcCode"));
+        goCmdc(paramters.get("cmdcCode").toString(), 1);
     }
 
     public void goCmdc(String cmdcCode, int testBy) throws Exception {
