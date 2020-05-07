@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -26,6 +27,8 @@ public abstract class WebUIBase {
     protected String chromeDriver = "";
 
     protected int waitTime = 15;
+
+    protected HashMap paramters = new HashMap<String, Object>();
 
     @Before
     public void begin() {
@@ -114,6 +117,16 @@ public abstract class WebUIBase {
             curBrowser = value.toLowerCase();
         }
     }
+
+    protected void setParamter(String key) {
+        String value = System.getenv(key);
+        if (value == null || value.equalsIgnoreCase("")) {
+            paramters.put(key, "");
+            return;
+        }
+        paramters.put(key, value);
+    }
+
 
     protected void wait2s() {
         try {
