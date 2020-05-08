@@ -17,7 +17,6 @@ public abstract class WebUIBase {
     private Logger logger = Logger.getLogger(WebUIBase.class);
     private String propFileName = "iselenium.properties";
 
-    protected String testcaseName = "";
     protected String curBrowser = "firefox"; //默认浏览器是firefox
     protected WebDriver driver;
     protected WebDriver.Navigation navigation;
@@ -26,13 +25,14 @@ public abstract class WebUIBase {
 
     protected int waitTime = 15;
 
+    protected Properties prop = null;
     protected HashMap paramters = new HashMap<String, Object>();
 
     @Before
     public void begin() {
         //加载配置文件，注意需要事先将配置文件放到user.home下
         logger.info("Load properties file:" + propFileName);
-        Properties prop = loadFromEnvProperties(propFileName);
+        loadFromEnvProperties(propFileName);
 
         //获取浏览器driver路径
         logger.info("Load webdriver path");
@@ -42,7 +42,6 @@ public abstract class WebUIBase {
         logger.info("chromePath = " + chromeDriver);
 
         //设定当前运行的浏览器
-        //需要在环境变量"currentBrowser"中配置当前运行什么浏览器, 可选值"firefox","chrome"
         setCurBrowser();
         logger.info("Current browser is " + curBrowser);
 
@@ -59,8 +58,8 @@ public abstract class WebUIBase {
             chromeOptions.addArguments("--headless");
             driver = new ChromeDriver(chromeOptions);
         } else {
-            System.setProperty("webdriver.gecko.driver", firefoxDriver);
-            driver = new FirefoxDriver();
+            logger.error("Current browser is illegal");
+            return;
         }
 
         WebDriver.Timeouts timeout = driver.manage().timeouts();
@@ -73,22 +72,21 @@ public abstract class WebUIBase {
 
     @After
     public void tearDown() {
-        logger.info("Automation test " + testcaseName + " finish!");
+        logger.info("See you next time!");
 
         if (driver == null) {
             return;
         }
 
+        wait2s();
         driver.quit();
     }
 
     //加载配置文件
-    private Properties loadFromEnvProperties(String propFileName) {
-        Properties prop = null;
+    private void loadFromEnvProperties(String propFileName) {
 
         String path = System.getProperty("user.dir");
 
-        //读入envProperties属性文件
         try {
             prop = new Properties();
             InputStream in = new BufferedInputStream(
@@ -101,7 +99,6 @@ public abstract class WebUIBase {
                     + propFileName + " file exist!");
         }
 
-        return prop;
     }
 
     private void setCurBrowser() {
@@ -119,12 +116,17 @@ public abstract class WebUIBase {
     protected void setParamter(String key) {
         String value = System.getenv(key);
         if (value == null || value.equalsIgnoreCase("")) {
-            paramters.put(key, "");
+            String propValue = prop.getProperty(key);
+            if (propValue == null || propValue.equalsIgnoreCase("")) {
+                paramters.put(key, "");
+                return;
+            }
+            else
+                paramters.put(key, propValue);
             return;
         }
         paramters.put(key, value);
     }
-
 
     protected void wait2s() {
         try {
