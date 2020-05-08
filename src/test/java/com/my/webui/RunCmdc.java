@@ -1,13 +1,13 @@
-package com.hogwarts.webui;
+package com.my.webui;
 
-import com.hogwarts.base.*;
+import com.my.base.*;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
 
-public class TestBaiDu extends WebUIBase {
-    private Logger logger = Logger.getLogger(TestBaiDu.class);
+public class RunCmdc extends WebUIBase {
+    private Logger logger = Logger.getLogger(RunCmdc.class);
 
     private static int testByTE = 0;
     private static int testByPD = 1;
