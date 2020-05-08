@@ -2,7 +2,6 @@ package com.hogwarts.webui;
 
 import com.hogwarts.base.*;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -18,8 +17,8 @@ public class TestBaiDu extends WebUIBase {
     public void cmdcGo() throws Exception{
         logger.info("Go to cmdc and fuck it up.");
         setParamter("cmdcCode");
-        System.out.println("cmdcCode::" + paramters.get("cmdcCode"));
-        goCmdc(paramters.get("cmdcCode").toString(), 1);
+        setParamter("testBy");
+        goCmdc(paramters.get("cmdcCode").toString(), Integer.parseInt(paramters.get("testBy")));
     }
 
     public void goCmdc(String cmdcCode, int testBy) throws Exception {
@@ -32,6 +31,7 @@ public class TestBaiDu extends WebUIBase {
         WebUITasks.input(By.id("userId"), "12010077", driver);
         WebUITasks.input(By.id("password"), "Sn@197777", driver);
         WebUITasks.click(By.id("submit_btn"), driver);
+        logger.info("Login successfully.");
         wait2s();
         // 【测试确认】
         WebUITasks.click(By.className("popTeConf"), driver);
@@ -41,6 +41,9 @@ public class TestBaiDu extends WebUIBase {
         // 压测环境
         WebUITasks.clickTheElement(By.className("default-val"), 12, driver);
         WebUITasks.clickTheElement(By.tagName("span"), "无压测", driver);
+        if (testBy == testByTE) {
+            // do nothing
+        }
         if (testBy == testByPD) {
             // 是否产品自测
             WebUITasks.clickTheElement(By.className("default-val"), 13, driver);
@@ -50,7 +53,8 @@ public class TestBaiDu extends WebUIBase {
             WebUITasks.clickTheElement(By.tagName("span"), "其它", driver);
         }
         // 【确定】
-//        WebUITasks.click(By.className("popWinBtnYes"), driver);
+        WebUITasks.click(By.className("popWinBtnYes"), driver);
         wait2s();
+        logger.info("Mission complicated.");
     }
 }
