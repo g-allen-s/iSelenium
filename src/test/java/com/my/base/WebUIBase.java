@@ -1,4 +1,4 @@
-package com.hogwarts.base;
+package com.my.base;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -12,9 +12,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Properties;
 
-/**
- * Created by JiZhi.Qian on 2019/3/11.
- */
+
 public abstract class WebUIBase {
     private Logger logger = Logger.getLogger(WebUIBase.class);
     private String propFileName = "iselenium.properties";
