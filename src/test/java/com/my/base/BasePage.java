@@ -8,9 +8,9 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 
-public class WebUITasks {
+public class BasePage {
     private static int waitShot = 30;
-    private static Logger logger = Logger.getLogger(WebUITasks.class);
+    private static Logger logger = Logger.getLogger(BasePage.class);
 
     public static void input(By by, String txt, WebDriver driver) throws Exception{
         WebElement ele = driver.findElement(by);
