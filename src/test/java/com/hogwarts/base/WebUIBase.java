@@ -81,7 +81,7 @@ public abstract class WebUIBase {
             return;
         }
 
-//        driver.quit();
+        driver.quit();
     }
 
     //加载配置文件
