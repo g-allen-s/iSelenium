@@ -18,7 +18,8 @@ public class TestBaiDu extends WebUIBase {
         logger.info("Go to cmdc and fuck it up.");
         setParamter("cmdcCode");
         setParamter("testBy");
-        goCmdc(paramters.get("cmdcCode").toString(), Integer.parseInt(paramters.get("testBy")));
+        goCmdc(String.valueOf(paramters.get("cmdcCode")),
+                Integer.parseInt(String.valueOf(paramters.get("testBy"))));
     }
 
     public void goCmdc(String cmdcCode, int testBy) throws Exception {
