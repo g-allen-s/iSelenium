@@ -56,7 +56,7 @@ public class TestCmdc extends BaseTest {
             BasePage.clickTheElement(By.tagName("span"), "其它", driver);
         }
         // 【确定】
-//        WebUITasks.click(By.className("popWinBtnYes"), driver);
+        BasePage.click(By.className("popWinBtnYes"), driver);
         wait2s();
         logger.info("[[" + cmdcCode + "]] Mission complicated.");
     }
