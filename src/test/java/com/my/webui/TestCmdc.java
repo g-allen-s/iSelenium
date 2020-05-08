@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 
 
-public class RunCmdc extends BaseTest {
-    private Logger logger = Logger.getLogger(RunCmdc.class);
+public class TestCmdc extends BaseTest {
+    private Logger logger = Logger.getLogger(TestCmdc.class);
 
     private static int testByTE = 0;
     private static int testByPD = 1;
