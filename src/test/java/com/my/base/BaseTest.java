@@ -96,12 +96,12 @@ public abstract class BaseTest {
     //加载配置文件
     private void loadFromEnvProperties(String propFileName) {
 
-        String path = System.getProperty("user.dir");
+        String path = System.getProperty("user.home");
 
         try {
             prop = new Properties();
             InputStream in = new BufferedInputStream(
-                    new FileInputStream(path + "\\src\\test\\resources\\" + propFileName));
+                    new FileInputStream(path + "\\IdeaProjects\\" + propFileName));
             prop.load(in);
             in.close();
         } catch (IOException ioex) {
