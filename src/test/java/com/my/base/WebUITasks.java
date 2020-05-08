@@ -1,4 +1,4 @@
-package com.hogwarts.base;
+package com.my.base;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-/**
- * Created by JiZhi.Qian on 2019/3/11.
- */
+
 public class WebUITasks {
     private static int waitShot = 30;
     private static Logger logger = Logger.getLogger(WebUITasks.class);
