@@ -3,6 +3,7 @@ package com.my.base;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,29 +14,29 @@ import java.util.HashMap;
 import java.util.Properties;
 
 
-public abstract class WebUIBase {
-    private Logger logger = Logger.getLogger(WebUIBase.class);
-    private String propFileName = "iselenium.properties";
+public abstract class BaseTest {
+    private Logger logger = Logger.getLogger(BaseTest.class);
+    private String propFileName = "cmdc.properties";
 
-    protected String curBrowser = "firefox"; //默认浏览器是firefox
+    protected String curBrowser = "firefox";
     protected WebDriver driver;
     protected WebDriver.Navigation navigation;
     protected String firefoxDriver = "";
     protected String chromeDriver = "";
 
-    protected int waitTime = 15;
+    protected int waitTime = 10;
 
     protected Properties prop = null;
     protected HashMap paramters = new HashMap<String, Object>();
 
     @Before
-    public void begin() {
+    public void begin() throws Exception {
         //加载配置文件，注意需要事先将配置文件放到user.home下
         logger.info("Load properties file:" + propFileName);
         loadFromEnvProperties(propFileName);
 
         //获取浏览器driver路径
-        logger.info("Load webdriver path");
+        logger.info("Load webdriver");
         firefoxDriver = prop.getProperty("FIREFOX_DRIVER");
         chromeDriver = prop.getProperty("CHROME_DRIVER");
         logger.info("firefoxDriver = " + firefoxDriver);
@@ -68,6 +69,16 @@ public abstract class WebUIBase {
         timeout.implicitlyWait(waitTime, java.util.concurrent.TimeUnit.SECONDS);
         driver.manage().window().maximize();
         navigation = driver.navigate();
+
+        // 登录
+        logger.info("Open the fucking cmdc");
+        navigation.to(prop.getProperty("HOST"));
+        wait2s();
+        BasePage.input(By.id("userId"), prop.getProperty("USERNAME"), driver);
+        BasePage.input(By.id("password"), prop.getProperty("PASSWORD"), driver);
+        BasePage.click(By.id("submit_btn"), driver);
+        logger.info("Login successfully.");
+        wait2s();
     }
 
     @After
