@@ -56,6 +56,6 @@ public class TestBaiDu extends WebUIBase {
         // 【确定】
         WebUITasks.click(By.className("popWinBtnYes"), driver);
         wait2s();
-        logger.info("Mission complicated.");
+        logger.info("[[" + cmdcCode + "]] Mission complicated.");
     }
 }
