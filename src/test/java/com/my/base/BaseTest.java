@@ -101,7 +101,7 @@ public abstract class BaseTest {
         try {
             prop = new Properties();
             InputStream in = new BufferedInputStream(
-                    new FileInputStream(path + "\\src\\test\\resources\\" + propFileName));
+                    new FileInputStream(path + "/src/test/resources/" + propFileName));
             prop.load(in);
             in.close();
         } catch (IOException ioex) {
@@ -142,6 +142,14 @@ public abstract class BaseTest {
     protected void wait2s() {
         try {
             Thread.sleep(2 * 1000);
+        } catch (InterruptedException e) {
+
+        }
+    }
+
+    protected void wait(int timeout) {
+        try {
+            Thread.sleep(timeout);
         } catch (InterruptedException e) {
 
         }
