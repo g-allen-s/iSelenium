@@ -70,6 +70,11 @@ public class BasePage {
         return wele;
     }
 
+    public static List<WebElement> findElementsByClass(String className, WebDriver driver) throws Exception {
+        List<WebElement> elements = driver.findElements(By.className(className));
+        return elements;
+    }
+
     protected static void wait(int sec){
         try {
             Thread.sleep(sec * 1000);
